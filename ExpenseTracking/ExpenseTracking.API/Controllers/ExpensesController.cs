@@ -1,11 +1,15 @@
 using System.Security.Claims;
 using ExpenseTracking.Application.Features;
+using ExpenseTracking.Application.Features.Expenses.Queries.GetAllExpenses;
+using ExpenseTracking.Application.Features.Expenses.Queries.GetAllExpensesForAdmin;
+using ExpenseTracking.Application.Features.Users.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseTracking.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ExpensesController : ControllerBase
@@ -44,4 +48,41 @@ public class ExpensesController : ControllerBase
         // İleride GetExpenseByIdQuery kullanılarak doldurulabilir
         return Ok(new { Message = "GetById endpoint is not implemented yet", Id = id });
     }
+    
+    [HttpGet("my-expenses")]
+    [Authorize(Roles = "Personel")]
+    public async Task<IActionResult> GetMyExpenses()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+        {
+            return Unauthorized("User identity not found.");
+        }
+
+        var userId = Guid.Parse(userIdClaim.Value);
+        var query = new GetAllExpensesQuery { UserId = userId };
+        var result = await _mediator.Send(query);
+
+        return Ok(result);
+    }
+    
+    [HttpGet("all")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetAllExpensesForAdmin()
+    {
+        var query = new GetAllExpensesForAdminQuery();
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+    
+    [HttpPost("add-personel")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> AddPersonel([FromBody] AddUserByAdminCommand command)
+    {
+        var createdUserId = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetById), new { id = createdUserId }, createdUserId);
+    }
+
+
+    
 }

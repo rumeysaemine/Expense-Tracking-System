@@ -20,6 +20,7 @@ public class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseCommand,
         var expense = _mapper.Map<Expense>(request);
 
         expense.Id = Guid.NewGuid();
+        expense.UserId = request.UserId; 
         expense.RequestDate = DateTime.UtcNow;
 
         await _context.Expenses.AddAsync(expense, cancellationToken);

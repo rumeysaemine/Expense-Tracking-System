@@ -3,7 +3,7 @@ namespace ExpenseTracking.Domain;
 public class Expense
 {
     public Guid Id { get; set; }
-    public string Title { get; set; } = string.Empty;
+    public string Title { get; set; }
     public decimal Amount { get; set; }
     public string PaymentMethod { get; set; } = "EFT";                 // Kredi Kartı, Nakit vs.
     public string Location { get; set; } = null!;

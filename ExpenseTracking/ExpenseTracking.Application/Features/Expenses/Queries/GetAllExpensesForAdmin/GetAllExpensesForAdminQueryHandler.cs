@@ -3,25 +3,24 @@ using ExpenseTracking.Application.Features.Expenses.DTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExpenseTracking.Application.Features.Expenses.Queries.GetAllExpenses;
+namespace ExpenseTracking.Application.Features.Expenses.Queries.GetAllExpensesForAdmin;
 
-public class GetAllExpensesQueryHandler : IRequestHandler<GetAllExpensesQuery, List<ExpenseDto>>
+public class GetAllExpensesForAdminQueryHandler : IRequestHandler<GetAllExpensesForAdminQuery, List<ExpenseDto>>
 {
     private readonly IAppDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetAllExpensesQueryHandler(IAppDbContext context, IMapper mapper)
+    public GetAllExpensesForAdminQueryHandler(IAppDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<List<ExpenseDto>> Handle(GetAllExpensesQuery request, CancellationToken cancellationToken)
+    public async Task<List<ExpenseDto>> Handle(GetAllExpensesForAdminQuery request, CancellationToken cancellationToken)
     {
         var expenses = await _context.Expenses
             .Include(e => e.Category)
             .Include(e => e.User)
-            .Where(e => e.UserId == request.UserId) // 👈 sadece giriş yapan kullanıcıya ait veriler
             .ToListAsync(cancellationToken);
 
         return _mapper.Map<List<ExpenseDto>>(expenses);
