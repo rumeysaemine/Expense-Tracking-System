@@ -21,6 +21,7 @@ public static class ServiceRegistration
         // Dosya depolama ve ödeme servisleri
         services.AddScoped<IFileStorageService, FileStorageService>();
         services.AddSingleton<IFakePaymentService, FakePaymentService>(); 
+        //services.AddScoped<IFakeBankService, FakeBankService>();
 
         // Repositories
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

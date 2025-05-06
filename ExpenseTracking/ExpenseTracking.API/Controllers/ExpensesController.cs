@@ -1,5 +1,7 @@
 using System.Security.Claims;
 using ExpenseTracking.Application.Features;
+using ExpenseTracking.Application.Features.Expenses.Commands.ApproveExpense;
+using ExpenseTracking.Application.Features.Expenses.Commands.RejectExpense;
 using ExpenseTracking.Application.Features.Expenses.Queries.GetAllExpenses;
 using ExpenseTracking.Application.Features.Expenses.Queries.GetAllExpensesForAdmin;
 using ExpenseTracking.Application.Features.Users.Commands;
@@ -82,7 +84,21 @@ public class ExpensesController : ControllerBase
         var createdUserId = await _mediator.Send(command);
         return CreatedAtAction(nameof(GetById), new { id = createdUserId }, createdUserId);
     }
+    
+    [HttpPost("{id}/approve")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> ApproveExpense(Guid id)
+    {
+        var result = await _mediator.Send(new ApproveExpenseCommand { ExpenseId = id });
+        return result ? Ok("Onaylandı ve ödeme gönderildi.") : NotFound();
+    }
 
-
+    [HttpPost("{id}/reject")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> RejectExpense(Guid id, [FromBody] string reason)
+    {
+        var result = await _mediator.Send(new RejectExpenseCommand { ExpenseId = id, Reason = reason });
+        return result ? Ok("Masraf talebi reddedildi.") : NotFound();
+    }
     
 }

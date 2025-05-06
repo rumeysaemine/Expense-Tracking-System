@@ -145,8 +145,8 @@ namespace ExpenseTracking.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Email", "FirstName", "IBAN", "IsActive", "LastName", "PasswordHash", "Role" },
                 values: new object[,]
                 {
-                    { new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "admin@example.com", "Admin", "TR000000000000000000000000", true, "User", "hashed_password", 1 },
-                    { new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "remi@example.com", "Rumeysa", "TR111111111111111111111111", true, "Personel", "hashed_password", 2 }
+                    { new Guid("11111111-1111-1111-1111-111111111111"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "admin@example.com", "Admin", "TR000000000000000000000000", true, "User", "AQAAAAEAACcQAAAAEDy1ihcEpbe7r4OUyOwoBwnPnd0QakKAEJDzIkusvF+DMW/aQkYApKpDvNYQBmbwvw==", 1 },
+                    { new Guid("22222222-2222-2222-2222-222222222222"), new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "remi@example.com", "Rumeysa", "TR111111111111111111111111", true, "Personel", "AQAAAAEAACcQAAAAEEu7oI8wcX/cz9f8Gfk98imaQUSi8OkfyTXFR5gODvTvKe2wfWvpfn0Hts1zNNdcdw==", 2 }
                 });
 
             migrationBuilder.CreateIndex(

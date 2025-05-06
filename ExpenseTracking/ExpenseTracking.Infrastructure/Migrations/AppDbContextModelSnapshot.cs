@@ -248,7 +248,7 @@ namespace ExpenseTracking.Infrastructure.Migrations
                             IBAN = "TR000000000000000000000000",
                             IsActive = true,
                             LastName = "User",
-                            PasswordHash = "hashed_password",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDy1ihcEpbe7r4OUyOwoBwnPnd0QakKAEJDzIkusvF+DMW/aQkYApKpDvNYQBmbwvw==",
                             Role = 1
                         },
                         new
@@ -260,7 +260,7 @@ namespace ExpenseTracking.Infrastructure.Migrations
                             IBAN = "TR111111111111111111111111",
                             IsActive = true,
                             LastName = "Personel",
-                            PasswordHash = "hashed_password",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEu7oI8wcX/cz9f8Gfk98imaQUSi8OkfyTXFR5gODvTvKe2wfWvpfn0Hts1zNNdcdw==",
                             Role = 2
                         });
                 });

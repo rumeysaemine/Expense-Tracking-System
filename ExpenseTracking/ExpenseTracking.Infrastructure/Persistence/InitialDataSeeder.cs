@@ -23,7 +23,7 @@ public static class InitialDataSeeder
                 FirstName = "Admin",
                 LastName = "User",
                 Email = "admin@example.com",
-                PasswordHash = "hashed_password",
+                PasswordHash = "AQAAAAEAACcQAAAAEDy1ihcEpbe7r4OUyOwoBwnPnd0QakKAEJDzIkusvF+DMW/aQkYApKpDvNYQBmbwvw==", // Admin123!
                 Role = UserRole.Admin,
                 IBAN = "TR000000000000000000000000",
                 CreatedAt = createdAt
@@ -34,12 +34,13 @@ public static class InitialDataSeeder
                 FirstName = "Rumeysa",
                 LastName = "Personel",
                 Email = "remi@example.com",
-                PasswordHash = new PasswordHasher<User>().HashPassword(null, "Personel123!"),
+                PasswordHash = "AQAAAAEAACcQAAAAEEu7oI8wcX/cz9f8Gfk98imaQUSi8OkfyTXFR5gODvTvKe2wfWvpfn0Hts1zNNdcdw==", // Personel123
                 Role = UserRole.Personel,
                 IBAN = "TR111111111111111111111111",
                 CreatedAt = createdAt
             }
         );
+
 
         modelBuilder.Entity<ExpenseCategory>().HasData(
             new ExpenseCategory { Id = category1Id, Name = "Yemek" },

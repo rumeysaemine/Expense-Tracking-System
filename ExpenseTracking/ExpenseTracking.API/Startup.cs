@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ExpenseTracking.Application.Features.Expenses.Commands.ApproveExpense;
 using ExpenseTracking.Domain;
 using Microsoft.AspNetCore.Identity;
 
@@ -30,6 +31,7 @@ namespace ExpenseTracking.API
 
             services.AddScoped<IAppDbContext, AppDbContext>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IFakeBankService, FakeBankService>();
             
             // Infrastructure & Application Servisleri
             services.AddInfrastructureServices(Configuration);
