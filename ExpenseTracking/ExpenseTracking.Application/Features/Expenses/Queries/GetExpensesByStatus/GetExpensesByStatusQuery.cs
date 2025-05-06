@@ -7,9 +7,11 @@ namespace ExpenseTracking.Application.Features.Expenses.Queries.GetExpensesBySta
 public class GetExpensesByStatusQuery : IRequest<List<ExpenseDto>>
 {
     public ExpenseStatus Status { get; set; }
+    public Guid UserId { get; set; }
 
-    public GetExpensesByStatusQuery(ExpenseStatus status)
+    public GetExpensesByStatusQuery(ExpenseStatus status, Guid userId)
     {
         Status = status;
+        UserId = userId;
     }
 }

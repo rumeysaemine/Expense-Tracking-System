@@ -9,6 +9,7 @@ public class ExpenseDto
     public string Location { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public DateTime ExpenseDate { get; set; }
+    public string? RejectionReason { get; set; }
     public string CategoryName { get; set; } = string.Empty;
     public string UserName { get; set; } = string.Empty;
 }

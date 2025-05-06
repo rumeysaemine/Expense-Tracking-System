@@ -21,9 +21,10 @@ public class GetExpensesByStatusQueryHandler : IRequestHandler<GetExpensesByStat
         var expenses = await _context.Expenses
             .Include(e => e.Category)
             .Include(e => e.User)
-            .Where(e => e.Status == request.Status)
+            .Where(e => e.Status == request.Status && e.UserId == request.UserId)
             .ToListAsync(cancellationToken);
 
         return _mapper.Map<List<ExpenseDto>>(expenses);
     }
+
 }

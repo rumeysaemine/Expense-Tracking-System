@@ -4,7 +4,9 @@ using ExpenseTracking.Application.Features.Expenses.Commands.ApproveExpense;
 using ExpenseTracking.Application.Features.Expenses.Commands.RejectExpense;
 using ExpenseTracking.Application.Features.Expenses.Queries.GetAllExpenses;
 using ExpenseTracking.Application.Features.Expenses.Queries.GetAllExpensesForAdmin;
+using ExpenseTracking.Application.Features.Expenses.Queries.GetExpensesByStatus;
 using ExpenseTracking.Application.Features.Users.Commands;
+using ExpenseTracking.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +67,20 @@ public class ExpensesController : ControllerBase
         var query = new GetAllExpensesQuery { UserId = userId };
         var result = await _mediator.Send(query);
 
+        return Ok(result);
+    }
+    
+    [HttpGet("my-expenses/by-status")]
+    [Authorize(Roles = "Personel")]
+    public async Task<IActionResult> GetMyExpensesByStatus([FromQuery] ExpenseStatus status)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (userIdClaim is null || !Guid.TryParse(userIdClaim, out var userId))
+            return Unauthorized("Geçersiz kullanıcı kimliği.");
+
+        var query = new GetExpensesByStatusQuery(status, userId);
+        var result = await _mediator.Send(query);
         return Ok(result);
     }
     
