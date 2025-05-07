@@ -7,6 +7,7 @@ using ExpenseTracking.Application.Features.Expenses.Queries.GetAllExpensesForAdm
 using ExpenseTracking.Application.Features.Expenses.Queries.GetExpensesByStatus;
 using ExpenseTracking.Application.Features.Users.Commands;
 using ExpenseTracking.Domain;
+using ExpenseTracking.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,12 @@ namespace ExpenseTracking.API.Controllers;
 public class ExpensesController : ControllerBase
 {
     private readonly IMediator _mediator;
-
-    public ExpensesController(IMediator mediator)
+    private readonly IFileStorageService _fileStorageService;
+    
+    public ExpensesController(IMediator mediator, IFileStorageService fileStorageService)
     {
         _mediator = mediator;
+        _fileStorageService = fileStorageService;
     }
 
     [HttpPost]
@@ -83,6 +86,19 @@ public class ExpensesController : ControllerBase
         var result = await _mediator.Send(query);
         return Ok(result);
     }
+    
+    [HttpPost("upload")]
+    [Authorize(Roles = "Personel")]
+    public async Task<IActionResult> UploadDocument(IFormFile file)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("Dosya boş.");
+
+        var fileName = await _fileStorageService.SaveFileAsync(file.OpenReadStream(), file.FileName);
+    
+        return Ok(new { FileName = fileName });
+    }
+
     
     [HttpGet("all")]
     [Authorize(Roles = "Admin")]

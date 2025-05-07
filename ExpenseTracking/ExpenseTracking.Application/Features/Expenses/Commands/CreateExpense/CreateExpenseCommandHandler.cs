@@ -22,6 +22,16 @@ public class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseCommand,
         expense.Id = Guid.NewGuid();
         expense.UserId = request.UserId; 
         expense.RequestDate = DateTime.UtcNow;
+        
+        if (request.DocumentFileNames != null && request.DocumentFileNames.Any())
+        {
+            expense.Documents = request.DocumentFileNames.Select(name => new ExpenseDocument
+            {
+                Id = Guid.NewGuid(),
+                FilePath = name,
+                ExpenseId = expense.Id
+            }).ToList();
+        }
 
         await _context.Expenses.AddAsync(expense, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);

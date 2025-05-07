@@ -11,6 +11,7 @@ public class CreateExpenseCommand : IRequest<Guid> // Geriye Expense Id dönecek
     public Guid CategoryId { get; set; }
     public DateTime Date { get; set; }
     public string Location { get; set; } = default!;
+    public List<string>? DocumentFileNames { get; set; }
     
     [JsonIgnore]
     public Guid UserId { get; set; } // Giriş yapan kullanıcıdan alınabilir

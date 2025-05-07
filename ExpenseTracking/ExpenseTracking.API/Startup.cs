@@ -32,6 +32,7 @@ namespace ExpenseTracking.API
             services.AddScoped<IAppDbContext, AppDbContext>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IFakeBankService, FakeBankService>();
+            services.AddScoped<IFileStorageService, FileStorageService>();
             
             // Infrastructure & Application Servisleri
             services.AddInfrastructureServices(Configuration);
